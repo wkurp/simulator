@@ -17,6 +17,14 @@ import com.qrp.agent.simulator.model.Policy;
 import com.qrp.agent.simulator.model.PolicyStatisticGeneral;
 import com.qrp.agent.simulator.util.FilelUtils;
 
+/**
+ * Application based on input Branded Factor 
+ * group Agents in Breed and simply display result in static HTML template output.
+ *
+ * @author Witold Kurp
+ * @version 1.0
+ * @since 2016-05-09
+ */
 public class AgentSimulator {
 	private static final Logger LOGGER = Logger.getLogger(AgentSimulator.class.getName());
 	// default range values
