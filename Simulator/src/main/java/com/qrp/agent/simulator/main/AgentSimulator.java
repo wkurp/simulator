@@ -105,16 +105,16 @@ public class AgentSimulator {
 
 	/**
 	 * This method calculate affinity threshold switch based on Agent Breed name
+	 * if Breed_C (Social_Grade * Attribute_Brand)
+	 * if Breed_NC (Social_Grade * Attribute_Brand * Brand_Factor)						
 	 * @param single Policy model
 	 * @return calculated BigDecimal switchRatio.
 	 */
 	private BigDecimal calculateSwitchRatio(Policy policy, BigDecimal brandFactor) {
 		BigDecimal switchRatio = null;
 		if (policy.getAgentBreed().equals("Breed_C")) {
-			// if Breed_C (Social_Grade * Attribute_Brand)
 			switchRatio = new BigDecimal(policy.getSocialGrade()).multiply(policy.getAtributeBrand());
 		} else if (policy.getAgentBreed().equals("Breed_NC")) {
-			// if Breed_NC (Social_Grade * Attribute_Brand * Brand_Factor)						
 			switchRatio = new BigDecimal(policy.getSocialGrade()).multiply(policy.getAtributeBrand().multiply(brandFactor));
 		} 
 		return switchRatio;
