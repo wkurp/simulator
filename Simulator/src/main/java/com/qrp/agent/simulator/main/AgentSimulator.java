@@ -69,22 +69,17 @@ public class AgentSimulator {
 				} 
 				affinity = calculateAffinity(policy);
 				BigDecimal switchRatio = calculateSwitchRatio(policy,brandFactor);
-				if (policyIsEqualBreedC(policy)) {
-					if (isSwitchRatioGreatherThanAffinity(affinity, switchRatio) && policyNotExistInRegainedList(policy)) {
-						agentLostList.add(policy);
-						policy.setAgentBreed("Breed_NC");
-					
+				if (policyIsEqualBreedC(policy) && isSwitchRatioGreatherThanAffinity(affinity, switchRatio) && policyNotExistInRegainedList(policy)) {
+					agentLostList.add(policy);
+					policy.setAgentBreed("Breed_NC");
+				} else if (policyIsEqualBreedNc(policy) && isSwitchRatioGreatherThanAffinity(affinity, switchRatio)) {
+					if (agentLostList.contains(policy)) {
+						agentLostList.remove(policy);
+						agentRegainedList.add(policy);
+					} else {
+						agentGainedList.add(policy);
 					}
-				} else if (policyIsEqualBreedNc(policy)) {
-					if (isSwitchRatioGreatherThanAffinity(affinity, switchRatio)) {
-						if (agentLostList.contains(policy)) {
-							agentLostList.remove(policy);
-							agentRegainedList.add(policy);
-						} else {
-							agentGainedList.add(policy);
-						}
-						policy.setAgentBreed("Breed_C");
-					}
+					policy.setAgentBreed("Breed_C");
 				} 
 			}
 			PolicyStatisticGeneral policyStatisticGeneral = new PolicyStatisticGeneral(currentYear, agentLostList.size(), agentGainedList.size(), agentRegainedList.size());
