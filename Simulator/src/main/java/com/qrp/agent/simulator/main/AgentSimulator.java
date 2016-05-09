@@ -98,6 +98,9 @@ public class AgentSimulator {
 		return !agentRegainedList.contains(policy);
 	}
 	
+	private boolean isSwitchRatioGreatherThanAffinity(BigDecimal affinity, BigDecimal switchRatio) {
+		return affinity.compareTo(switchRatio)==-1;
+	}
 	private boolean isPolicyAutoRenewDisabled(Policy policy) {
 		return policy.getAutoRenew()==0;
 	}
