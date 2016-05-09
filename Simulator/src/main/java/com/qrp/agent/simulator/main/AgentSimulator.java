@@ -64,12 +64,12 @@ public class AgentSimulator {
 				policy.incrementAge();
 				LOGGER.finest(policy.toString());
 				BigDecimal affinity = null;
-				if (policy.getAutoRenew()==0) {
-					affinity = calculateAffinity(policy);
-				}
+				if (!isPolicyAutoRenewDisabled(policy)) {
+					continue;
+				} 
 				affinity = calculateAffinity(policy);
 				BigDecimal switchRatio = calculateSwitchRatio(policy,brandFactor);
-				if (policy.getAgentBreed().equals("Breed_C")) {
+				if (policyIsEqualBreedC(policy)) {
 					if (affinity.compareTo(switchRatio)==-1) {
 						// Switch C -> NC
 						if (!agentRegainedList.contains(policy)) {
@@ -77,7 +77,7 @@ public class AgentSimulator {
 							policy.setAgentBreed("Breed_NC");
 						}
 					}
-				} else if (policy.getAgentBreed().equals("Breed_NC")) {
+				} else if (policyIsEqualBreedNc(policy)) {
 					if (affinity.compareTo(switchRatio)==-1) {
 						// Switch NC -> C
 						if (agentLostList.contains(policy)) {
@@ -103,6 +103,17 @@ public class AgentSimulator {
 		}
 	}
 
+	private boolean isPolicyAutoRenewDisabled(Policy policy) {
+		return policy.getAutoRenew()==0;
+	}
+
+	private boolean policyIsEqualBreedNc(Policy policy) {
+		return policy.getAgentBreed().equals("Breed_NC");
+	}
+
+	private boolean policyIsEqualBreedC(Policy policy) {
+		return policy.getAgentBreed().equals("Breed_C");
+	}
 	/**
 	 * This method calculate affinity threshold switch based on Agent Breed name
 	 * if Breed_C (Social_Grade * Attribute_Brand)
