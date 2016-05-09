@@ -70,24 +70,20 @@ public class AgentSimulator {
 				affinity = calculateAffinity(policy);
 				BigDecimal switchRatio = calculateSwitchRatio(policy,brandFactor);
 				if (policyIsEqualBreedC(policy)) {
-					if (affinity.compareTo(switchRatio)==-1) {
-						// Switch C -> NC
-						if (!agentRegainedList.contains(policy)) {
-							agentLostList.add(policy);
-							policy.setAgentBreed("Breed_NC");
-						}
+					if (isSwitchRatioGreatherThanAffinity(affinity, switchRatio) && policyNotExistInRegainedList(policy)) {
+						agentLostList.add(policy);
+						policy.setAgentBreed("Breed_NC");
+					
 					}
 				} else if (policyIsEqualBreedNc(policy)) {
-					if (affinity.compareTo(switchRatio)==-1) {
-						// Switch NC -> C
+					if (isSwitchRatioGreatherThanAffinity(affinity, switchRatio)) {
 						if (agentLostList.contains(policy)) {
 							agentLostList.remove(policy);
 							agentRegainedList.add(policy);
-							policy.setAgentBreed("Breed_C");
 						} else {
 							agentGainedList.add(policy);
-							policy.setAgentBreed("Breed_C");
 						}
+						policy.setAgentBreed("Breed_C");
 					}
 				} 
 			}
