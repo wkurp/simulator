@@ -99,6 +99,10 @@ public class AgentSimulator {
 		}
 	}
 
+	private boolean policyNotExistInRegainedList(Policy policy) {
+		return !agentRegainedList.contains(policy);
+	}
+	
 	private boolean isPolicyAutoRenewDisabled(Policy policy) {
 		return policy.getAutoRenew()==0;
 	}
